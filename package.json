@@ -1,0 +1,30 @@
+{
+  "name": "tickr",
+  "version": "1.0.0",
+  "description": "A minimal, secure, and smart task management system designed to help users plan better, focus faster, and finish stronger. With built-in JWT authentication and clean API architecture, Tickr  is your backend-ready foundation for building sleek productivity tools.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chiranjeev-sahu/Tickr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Chiranjeev-sahu/Tickr/issues"
+  },
+  "homepage": "https://github.com/Chiranjeev-sahu/Tickr#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "zod": "^3.24.3"
+  }
+}

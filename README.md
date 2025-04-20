@@ -1,0 +1,1 @@
+A minimal, secure, and smart task management system designed to help users plan better, focus faster, and finish stronger. With built-in JWT authentication and clean API architecture, Tickr  is your backend-ready foundation for building sleek productivity tools.
