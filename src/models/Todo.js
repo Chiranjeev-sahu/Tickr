@@ -32,6 +32,10 @@ const TodoSchema = new Schema(
       required: true,
       index: true,
     },
+    dueDate: { 
+      type: Date,
+      required: false, 
+    },
   },
   { timestamps: true }
 );
