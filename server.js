@@ -1,18 +1,27 @@
-const express = require("express");
-const app = express();
-const connectDB = require('./src/config/db.js');
-const cors = require('cors'); // Import cors
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./src/config/db.js'); 
+const authRoutes = require('./src/routes/auth'); 
+const todoRoutes = require('./src/routes/todos'); 
+require('dotenv').config();
 
-const port = 3000;
+const app = express();
+const port = process.env.PORT || 3000; 
+// 
+app.use(cors()); 
+app.use(express.json()); 
 
 connectDB();
-app.use(cors()); 
-app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("hello");
+// Mount route handlers
+app.use('/api/auth', authRoutes); 
+app.use('/api/todos', todoRoutes); 
+
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the Todo API');
 });
 
 app.listen(port, () => {
-    console.log(`Server is listening at http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
