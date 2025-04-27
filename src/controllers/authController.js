@@ -13,7 +13,7 @@ const handleError=(res,error,defaultMessage = 'Internal Server Error')=>{
 
 const signup=async(req,res)=>{
     try{
-        const hashedPassword=bcrypt.hash(req.body.password,10);
+        const hashedPassword=await bcrypt.hash(req.body.password,10);
 
         const newUser=new User({
             email:req.body.email,
@@ -50,14 +50,13 @@ const login=async(req,res)=>{
         const isValidPassword= await bcrypt.compare(req.body.password,user.password);
          
 
-        if(isValidPassword){
+        if(!isValidPassword){
             return res.status(401).json({message:'Invalid credentials'});
         }
 
         const token = jwt.sign(
             { userId: user._id,role:user.role},
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            process.env.JWT_SECRET
         );
 
         

@@ -6,7 +6,10 @@ const todoSchema = z.object({
     category: z.string().min(1).max(50).optional(),  
     priority: z.enum(['high', 'medium', 'low']).optional(), 
     completed: z.boolean().default(false), 
-    dueDate: z.date().optional() 
+    dueDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+        message: "Invalid date format",
+    }).optional().transform((val) => (val ? new Date(val) : undefined))
+
 });
 
 const validateTodo = (req, res, next) => {

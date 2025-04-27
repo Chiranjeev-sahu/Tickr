@@ -21,6 +21,7 @@ const createTodo= async (req,res)=>{
             category,
             priority,
             dueDate,
+            userId,
         });
 
         const savedTodo=await newTodo.save();
@@ -40,7 +41,7 @@ const getAllTodos=async(req,res)=>{
         const userId=req.user.userId;
         const todos= await Todo.find({userId})
               .sort({createdAt:-1})
-              .populate('user','username email')
+              .populate('userId','username email')
             res.status(200).json({
                 message: 'Todos retrieved successfully',
                 todos,
@@ -54,7 +55,7 @@ const getAllTodos=async(req,res)=>{
 const getTodoById=async(req,res)=>{
     try{
         const todoId=req.params.id;
-        const todo=await Todo.findById(todoId).populate('user','username email');
+        const todo=await Todo.findById(todoId).populate('userId','username email');
 
         if(!todo){
             return res.status(403).json({message:'Todo not found'});
@@ -94,7 +95,7 @@ const updateTodo= async (req,res)=>{
             todoId,
             {title,description,category,priority,completed,dueDate},
             {new:true, runValidators:true}
-        ).populate('user','username email');
+        ).populate('userId','username email');
         res.status(200).json({
             message:'Todo  updated successfully',
             todo:updatedTodo,
