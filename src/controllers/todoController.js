@@ -70,7 +70,7 @@ const getTodoById = async (req, res) => {
       todo,
     });
   } catch (error) {
-    handleError(res, req, "Failed to retrieve todo");
+    handleError(res, error, "Failed to retrieve todo");
   }
 };
 
