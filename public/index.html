@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickr - Task Management</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon.jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <img class="logo" src="./assets/icons/icon.jpeg" alt="Tickr Logo">
+            <div class="header-action">
+                <a href="/auth.html" class="button primary-button get-started-link">Get Started</a>
+            </div>
+         </div>
+    </header>
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-content">
+                <img class="hero-image" src="./assets/icons/icon.jpeg" alt="Tickr Illustration">
+                <h1 class="hero-title">Streamline, prioritize, and conquer your tasks with Tickr.</h1>
+                <p class="hero-description">Tickr is your intuitive task manager, designed to simplify your daily workflow and help you stay focused, organized, and productive. Take control of your tasks with ease and get more done.</p>
+                <a href="/auth.html" class="button primary-button hero-get-started-button">Get Started</a>
+            </div>
+        </section>
+        <section class="features-section">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="./assets/icons/checklist.png" alt="Intuitive Task Organization" class="feature-icon">
+                    <h3 class="feature-title">Intuitive Task Organization</h3>
+                    <p class="feature-description">Effortlessly structure your tasks with drag-and-drop and simple prioritization.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="./assets/icons/dashboard.png" alt="Personalized Productivity Overview" class="feature-icon">
+                    <h3 class="feature-title">Personalized Productivity Overview</h3>
+                    <p class="feature-description">Monitor your progress with a tailored dashboard that highlights your task accomplishments.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="./assets/icons/clean-design.png" alt="Clean and Efficient Design" class="feature-icon">
+                    <h3 class="feature-title">Clean and Efficient Design</h3>
+                    <p class="feature-description">Enjoy a clutter-free, modern interface designed for optimal usability.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="./assets/icons/data-synchronization.png" alt="Seamless Device Synchronization" class="feature-icon">
+                    <h3 class="feature-title">Seamless Device Synchronization</h3>
+                    <p class="feature-description">Keep your tasks updated across all your devices, ensuring you're always in control.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <p class="footer-copyright">&copy; 2025 Tickr</p>
+    </footer>
+    <script>
+        const getStartedButtons = document.querySelectorAll('.hero-get-started-button, .get-started-link');
+        getStartedButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                window.location.href = 'auth.html'; 
+            });
+        });
+    </script>
+</body>
+</html>
