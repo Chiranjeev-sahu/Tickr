@@ -136,10 +136,27 @@ header{
     background-color: #000;
     color: #fff;         
     text-align: center;     
-    padding: 20px;        
+    padding: 10px;        
+    padding-inline: 20px;
+    width: 100%;
     margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .footer-copyright {
-    font-size: 0.9rem;     
+    margin-top: 15px;
+    font-size: 1rem;     
+}
+
+.handles{
+    display: flex;
+    justify-content:space-between;
+    align-items: baseline;
+    min-width: 100px;
+}
+.twitter-handle, .github-handle{
+    max-width: 35px;
+    max-height: 35px;
 }
