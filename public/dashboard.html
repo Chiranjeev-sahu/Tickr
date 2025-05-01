@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management - Kanban Board</title>
+    <link rel="stylesheet" href="./styles/dashboard.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon.jpeg">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <img class="logo" src="./assets/icons/icon.png" alt="Tickr Logo">
+            <div class="header-action">
+                <a href="/auth.html" class="button primary-button logout">Logout<img src="./assets/icons/logout.png" class="logout-icon" alt="Logout Icon">
+                </a>
+            </div>
+         </div>
+    </header>
+    <div class="page-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="collapse-btn" id="collapse-btn">
+                    <img id="collapse-icon-left" src="./assets/icons/left-collapse.png" alt="Collapse Sidebar" style="display: block;">
+                    <img id="collapse-icon-right" src="./assets/icons/open-sidebar.png" alt="Collapse Sidebar" style="display: none;">
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="new-task-link">
+                            <img src="./assets/icons/add.png" alt="Add Task">
+                            <span>Add Task</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="#" class="nav-link" id="kanban-link">
+                            <img src="./assets/icons/kanban-board.png" alt="Kanban Board">
+                            <span>Kanban</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" id="calendar-link">
+                            <img src="./assets/icons/calendar.png" alt="Calendar">
+                            <span>Calendar</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content kanban-view">
+            <section class="overview-section" id="overview">
+                <div class="overview-board">
+                    <div class="overview-column">
+                        <h3 class="overview-column-title">
+                            <span>To Do</span>
+                            <img src="./assets/icons/checklist.png" class="type-icon">
+                        </h3>
+                        <p id="todo-count">0</p>
+                        <p>Pending tasks</p>
+                    </div>
+                    <div class="overview-column">
+                        <h3 class="overview-column-title">
+                            <span>In Progress</span>
+                            <img src="./assets/icons/in-progress.png" class="type-icon">
+                        </h3>
+                        <p id="in-progress-count">0</p>
+                        <p>Tasks in progress</p>
+                    </div>
+                    <div class="overview-column">
+                        <h3 class="overview-column-title">
+                            <span>Completed</span>
+                            <img src="./assets/icons/checked.png" class="type-icon">
+                        </h3>
+                        <p id="completed-count">0</p>
+                        <p>Finished tasks</p>
+                    </div>
+                    <div class="overview-column">
+                        <h3 class="overview-column-title">
+                            <span>Overdue</span>
+                            <img src="./assets/icons/overdue.png" class="type-icon">
+                        </h3>
+                        <p id="overdue-count">0</p>
+                        <p>Tasks past due date</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="kanban-board" id="kanban-board">
+                <div class="kanban-column todo" data-status="todo">
+                    <div class="kanban-column-title-container">
+                        <h2 class="kanban-column-title">To Do (0)</h2>
+                    </div>
+                    <div class="task-cards" id="todo-tasks"></div>
+                </div>
+                <div class="kanban-column inprogress" data-status="inprogress">
+                    <div class="kanban-column-title-container">
+                        <h2 class="kanban-column-title">In Progress (0)</h2>
+                    </div>
+                    <div class="task-cards" id="inprogress-tasks"></div>
+                </div>
+                <div class="kanban-column completed" data-status="completed">
+                    <div class="kanban-column-title-container">
+                        <h2 class="kanban-column-title">Completed (0)</h2>
+                    </div>
+                    <div class="task-cards" id="completed-tasks"></div>
+                </div>
+                <div class="kanban-column overdue" data-status="overdue">
+                    <div class="kanban-column-title-container">
+                        <h2 class="kanban-column-title">Overdue (0)</h2>
+                    </div>
+                    <div class="task-cards" id="overdue-tasks"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        const collapseBtn = document.getElementById('collapse-btn');
+        const sidebar = document.getElementById('sidebar');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const collapseIconLeft = document.getElementById('collapse-icon-left');
+        const collapseIconRight = document.getElementById('collapse-icon-right');
+        const todoTasksCount = document.getElementById('todo-tasks').children.length;
+        const inprogressTasksCount = document.getElementById('inprogress-tasks').children.length;
+        const completedTasksCount = document.getElementById('completed-tasks').children.length;
+        const overdueTasksCount = document.getElementById('overdue-tasks').children.length;
+
+        document.querySelector('.kanban-column-title-container h2').textContent = `To Do (${todoTasksCount})`;
+        document.querySelector('.kanban-column-title-container h2').textContent = `In Progress (${inprogressTasksCount})`;
+        document.querySelector('.kanban-column-title-container h2').textContent = `Completed (${completedTasksCount})`;
+        document.querySelector('.kanban-column-title-container h2').textContent = `Overdue (${overdueTasksCount})`;
+
+        collapseBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            if (sidebar.classList.contains('collapsed')) {
+                collapseIconLeft.style.display = 'none';
+                collapseIconRight.style.display = 'block';
+            } else {
+                collapseIconLeft.style.display = 'block';
+                collapseIconRight.style.display = 'none';
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.forEach(link => link.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
