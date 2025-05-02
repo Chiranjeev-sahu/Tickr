@@ -12,7 +12,7 @@
         <div class="header-content">
             <img class="logo" src="./assets/icons/icon.png" alt="Tickr Logo">
             <div class="header-action">
-                <a href="/auth.html" class="button primary-button get-started-link">Get Started</a>
+                <a href="auth.html" class="button primary-button get-started-link">Get Started</a>
             </div>
 
          </div>
@@ -23,7 +23,10 @@
                 <img class="hero-image" src="./assets/icons/icon.png" alt="Tickr Illustration">
                 <h1 class="hero-title">Streamline, prioritize, and conquer your tasks with Tickr.</h1>
                 <p class="hero-description">Tickr is your intuitive task manager, designed to simplify your daily workflow and help you stay focused, organized, and productive. Take control of your tasks with ease and get more done.</p>
-                <a href="/auth.html" class="button primary-button hero-get-started-button">Get Started</a>
+                <div class="header-action">
+                    <a href="auth.html" class="button primary-button get-started-link">Get Started</a>
+                </div>
+    
             </div>
         </section>
         <section class="features-section">
@@ -62,10 +65,10 @@
         </div>
     </footer>
     <script>
-        const getStartedButtons = document.querySelectorAll('.hero-get-started-button, .get-started-link');
+        const getStartedButtons = document.querySelectorAll('.get-started-link');
         getStartedButtons.forEach(button => {
             button.addEventListener('click', () => {
-                window.location.href = '.public/auth.html'; 
+                window.location.href = 'auth.html'; 
             });
         });
     </script>

@@ -67,7 +67,9 @@ h4 {
     background-color: #000000;
     color: white;
 }
-
+.header-action .logout{
+    transition: transform 0.3s ease;
+}
 .header-action .logout:hover {
     transform: translateY(-3px);
 }
@@ -138,16 +140,14 @@ header {
 }
 
 .sidebar.collapsed {
-    width: 80px;
+    width: 100px;
 }
 
 .sidebar.collapsed .nav-link span {
     display: none;
 }
 
-.sidebar.collapsed .sidebar-header {
-    margin-bottom: 0px;
-}
+
 
 .sidebar-header {
     display: flex;
