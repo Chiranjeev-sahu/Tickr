@@ -3,12 +3,12 @@ const { z } =require('zod');
 const signupSchema=z.object({
     email: z.string().email(),
     username: z.string().min(3).max(30),
-    password: z.string().min(),
+    password: z.string(),
 });
 
 const loginSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(8),
+    password: z.string(),
 });
 
 const validateSignup=(req,res,next)=>{
