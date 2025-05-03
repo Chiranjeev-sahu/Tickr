@@ -13,11 +13,11 @@ const TodoSchema = new Schema(
       required: true,
       trim: true,
     },
-    category: {
-      type: String,
-      trim: true,
-      default: "others",
-    },
+    // category: {  // Commented out category
+    //   type: String,
+    //   trim: true,
+    //   default: "others",
+    // },
     priority: {
       type: String,
       default: "medium",
@@ -36,9 +36,14 @@ const TodoSchema = new Schema(
       type: Date,
       required: false, 
     },
+    status: {
+      type: String,
+      enum: ['todo', 'inprogress', 'completed', 'overdue'],
+      default: 'todo',
+    },
   },
   { timestamps: true }
 );
 
-const Todo = mongoose.model("Todo", TodoSchema,"todos");
+const Todo = mongoose.model("Todo", TodoSchema, "todos");
 module.exports = Todo;

@@ -11,16 +11,17 @@ const handleError = (res, error, defaultMessage = "Internal Server Error") => {
 
 const createTodo = async (req, res) => {
   try {
-    const { title, description, category, priority, dueDate } = req.body;
+    const { title, description, priority, dueDate, status } = req.body; 
     const userId = req.user.userId;
 
     const newTodo = new Todo({
       title,
       description,
-      category,
+      // category, 
       priority,
       dueDate,
       userId,
+      status,
     });
 
     const savedTodo = await newTodo.save();
@@ -53,13 +54,13 @@ const getAllTodos = async (req, res) => {
 const getTodoById = async (req, res) => {
   try {
     const todoId = req.params.id;
-    const todo = await Todo.findById(todoId).populate("userId","username email");
+    const todo = await Todo.findById(todoId).populate("userId", "username email");
 
     if (!todo) {
       return res.status(403).json({ message: "Todo not found" });
     }
 
-    const ownerId = todo.userId._id? todo.userId._id.toString(): todo.userId.toString();
+    const ownerId = todo.userId._id ? todo.userId._id.toString() : todo.userId.toString();
 
     if (ownerId !== req.user.userId.toString()) {
       return res.status(403).json({ message: "Unauthorized: You can only access your own todos" });
@@ -77,16 +78,14 @@ const getTodoById = async (req, res) => {
 const updateTodo = async (req, res) => {
   try {
     const todoId = req.params.id;
-    const { title, description, category, priority, completed, dueDate } =
-      req.body;
-
+    const { title, description, priority, completed, dueDate, status } = req.body; 
     const todo = await Todo.findById(todoId);
 
     if (!todo) {
       return res.status(404).json({ message: "Todo not found" });
     }
 
-    const ownerId = todo.userId._id? todo.userId._id.toString(): todo.userId.toString();
+    const ownerId = todo.userId._id ? todo.userId._id.toString() : todo.userId.toString();
 
     if (ownerId !== req.user.userId.toString()) {
       return res.status(403).json({ message: "Unauthorized: You can only update your own todos" });
@@ -94,7 +93,7 @@ const updateTodo = async (req, res) => {
 
     const updatedTodo = await Todo.findByIdAndUpdate(
       todoId,
-      { title, description, category, priority, completed, dueDate },
+      { title, description, priority, completed, dueDate, status }, 
       { new: true, runValidators: true }
     ).populate("userId", "username email");
     res.status(200).json({
@@ -114,9 +113,9 @@ const deleteTodo = async (req, res) => {
     if (!todo) {
       return res.status(404).json({ message: "Todo not found" });
     }
-    const ownerId = todo.userId._id? todo.userId._id.toString(): todo.userId.toString();
+    const ownerId = todo.userId._id ? todo.userId._id.toString() : todo.userId.toString();
 
-    if (ownerId !==req.user.userId.toString()) {
+    if (ownerId !== req.user.userId.toString()) {
       return res.status(403).json({ message: "Unauthorized: You can only delete your own todos" });
     }
 
