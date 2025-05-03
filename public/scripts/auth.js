@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorPopup = document.getElementById('error-popup');
     const closeErrorPopup = document.getElementById('close-error-popup');
     const errorMessageDisplay = document.getElementById('error-message');
-    const errorTitleDisplay = document.getElementById('error-title');
+    // const errorTitleDisplay = document.getElementById('error-title');
 
-    function showError(message, title = "Error") {
-        errorTitleDisplay.textContent = title;
+    function showError(message) {
+        // errorTitleDisplay.textContent = title;
         errorMessageDisplay.textContent = message;
         errorPopup.style.display = "block";
     }
@@ -86,11 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(data => {
-            if (data.message === 'User created successfuly') {
+            if (data.message === 'User registered successfully.') {
                 alert('Account created successfully! Please log in.');
+                localStorage.setItem('token', data.token);
                 window.location.href = 'dashboard.html';
             } else {
-                showError(data.message, "Signup Failed");
+                showError(data.message);
             }
         })
         .catch(error => {
@@ -98,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showError('An error occurred during signup. Please try again.');
         });
     });
-
 
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('token', data.token);
                 window.location.href = 'dashboard.html';
             } else {
-                showError(data.message, "Login Failed");
+                showError(data.message);
             }
         })
         .catch(error => {
@@ -149,4 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
             showError('An error occurred during login. Please try again.');
         });
     });
+
+    function isValidEmail(email) {
+        // Basic email validation regex (you can use a more robust one)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 });

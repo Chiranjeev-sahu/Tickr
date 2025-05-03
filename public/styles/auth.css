@@ -134,10 +134,6 @@ p{
     text-decoration: none;
 }
 
-#error-title {
-    color: #dc3545;
-    margin-bottom: 10px;
-}
 
 #error-message {
     margin-bottom: 20px;
