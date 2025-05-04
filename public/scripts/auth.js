@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(data => {
-            if (data.message === 'User registered successfully.') {
-                alert('Account created successfully! Please log in.');
+            if (data.message === 'User created successfully') {
+                // alert('Account created successfully! Please log in.');
                 localStorage.setItem('token', data.token);
                 window.location.href = 'dashboard.html';
             } else {
@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function isValidEmail(email) {
-        // Basic email validation regex (you can use a more robust one)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }

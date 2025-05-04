@@ -26,7 +26,7 @@ const signup=async(req,res)=>{
         const token=jwt.sign({userId:savedUser._id,role:savedUser.role},process.env.JWT_SECRET);
         
         res.status(201).json({
-            message:'User created successfuly',
+            message:'User created successfully',
             user:{
                 _id: savedUser._id,
                 email: savedUser.email,

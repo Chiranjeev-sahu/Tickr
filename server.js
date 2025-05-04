@@ -6,14 +6,14 @@ const todoRoutes = require('./src/routes/todos');
 require('dotenv').config();
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 3000; 
-// 
-app.use(cors()); 
+
 app.use(express.json()); 
 
 connectDB();
 
-// Mount route handlers
+// mount handlers
 app.use('/api/auth', authRoutes); 
 app.use('/api/todos', todoRoutes); 
 
