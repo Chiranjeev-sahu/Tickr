@@ -17,7 +17,7 @@ body {
     background-color: #f8f9fa;
 }
 
-a {
+a{
     color: #adb1b6;
     text-decoration: none;
 }
@@ -67,9 +67,11 @@ h4 {
     background-color: #000000;
     color: white;
 }
-.header-action .logout{
+
+.header-action .logout {
     transition: transform 0.3s ease;
 }
+
 .header-action .logout:hover {
     transform: translateY(-3px);
 }
@@ -146,8 +148,6 @@ header {
 .sidebar.collapsed .nav-link span {
     display: none;
 }
-
-
 
 .sidebar-header {
     display: flex;
@@ -259,11 +259,8 @@ header {
     margin-right: 5px;
 }
 
-#todo-count,
-#in-progress-count,
-#completed-count,
-#overdue-count {
-    font-size: 1.5rem;
+.todo-count,.in-progress-count,.completed-count,.overdue-count {
+    font-size: 1.7rem;
     font-weight: bold;
     color: #34495e;
 }
@@ -295,6 +292,11 @@ header {
     margin-bottom: 10px;
 }
 
+.section-title {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
 .kanban-column-title {
     font-size: 1.2rem;
     margin-bottom: 0;
@@ -319,6 +321,18 @@ header {
     color: #000000;
 }
 
+.task-card h4 {
+    background-color: #adb0b4;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.task-card .description {
+    color: #837c7c;
+    font-weight: 500;
+}
+
 .task-card:hover {
     transform: translateY(-5px);
 }
@@ -338,6 +352,120 @@ header {
     text-decoration: none;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 600;
+}
+
+/* modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    border-radius: 8px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+}
+
+#calendar-container-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#error-title {
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+#error-message {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+
+.task-card .priority-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 5px; 
+}
+
+.task-card .priority-tag {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    color: white;
+}
+
+.task-card .priority-high {
+    background-color: #dc3545; 
+}
+
+.task-card .priority-medium {
+    background-color: #ffc107; 
+    color: #212529; 
+}
+
+.task-card .priority-low {
+    background-color: #28a745; 
+}
+
+
+.task-card .due-date-container {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.task-card .due-date-container .calendar-icon {
+    margin-right: 5px;
+    display: flex; 
+    align-items: center;
+}
+
+.task-card .due-date-container .calendar-icon img{
+    height: 16px; 
+    width: 16px; 
+}
+
+.task-card .due-date-container span {
+    vertical-align: middle;
 }
 
 @media (max-width: 992px) {

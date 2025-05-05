@@ -6,6 +6,12 @@
     <title>Tasks</title>
     <link rel="stylesheet" href="./styles/dashboard.css">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon.jpeg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script src="scripts/dashboard.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -48,7 +54,7 @@
                 </ul>
             </nav>
         </aside>
-        <main class="main-content kanban-view">
+        <main class="main-content">
             <section class="overview-section" id="overview">
                 <div class="overview-board">
                     <div class="overview-column">
@@ -56,7 +62,7 @@
                             <span>To Do</span>
                             <img src="./assets/icons/checklist.png" class="type-icon">
                         </h3>
-                        <p id="todo-count">0</p>
+                        <p class="todo-count">0</p>
                         <p>Pending tasks</p>
                     </div>
                     <div class="overview-column">
@@ -64,7 +70,7 @@
                             <span>In Progress</span>
                             <img src="./assets/icons/in-progress.png" class="type-icon">
                         </h3>
-                        <p id="in-progress-count">0</p>
+                        <p class="in-progress-count">0</p>
                         <p>Tasks in progress</p>
                     </div>
                     <div class="overview-column">
@@ -72,7 +78,7 @@
                             <span>Completed</span>
                             <img src="./assets/icons/checked.png" class="type-icon">
                         </h3>
-                        <p id="completed-count">0</p>
+                        <p class="completed-count">0</p>
                         <p>Finished tasks</p>
                     </div>
                     <div class="overview-column">
@@ -80,38 +86,100 @@
                             <span>Overdue</span>
                             <img src="./assets/icons/overdue.png" class="type-icon">
                         </h3>
-                        <p id="overdue-count">0</p>
+                        <p class="overdue-count">0</p>
                         <p>Tasks past due date</p>
                     </div>
                 </div>
             </section>
 
-            <section class="kanban-board" id="kanban-board">
-                <div class="kanban-column todo" data-status="todo">
-                    <div class="kanban-column-title-container">
-                        <h2 class="kanban-column-title">To Do (0)</h2>
+            <section id="kanban-section" class="kanban-view hidden-section">
+                <h1 class="section-title">Kanban Board</h1>
+                <div class="kanban-board" id="kanban-board-content">
+                    <div class="kanban-column todo" data-status="todo">
+                        <div class="kanban-column-title-container">
+                            <h2 class="kanban-column-title">To Do (<span class="todo-count">0</span>)</h2>
+                        </div>
+                        <div class="task-cards" id="todo-tasks"></div>
                     </div>
-                    <div class="task-cards" id="todo-tasks"></div>
-                </div>
-                <div class="kanban-column inprogress" data-status="inprogress">
-                    <div class="kanban-column-title-container">
-                        <h2 class="kanban-column-title">In Progress (0)</h2>
+                    <div class="kanban-column inprogress" data-status="inprogress">
+                        <div class="kanban-column-title-container">
+                            <h2 class="kanban-column-title">In Progress (<span class="in-progress-count">0</span>)</h2>
+                        </div>
+                        <div class="task-cards" id="inprogress-tasks"></div>
                     </div>
-                    <div class="task-cards" id="inprogress-tasks"></div>
-                </div>
-                <div class="kanban-column completed" data-status="completed">
-                    <div class="kanban-column-title-container">
-                        <h2 class="kanban-column-title">Completed (0)</h2>
+                    <div class="kanban-column completed" data-status="completed">
+                        <div class="kanban-column-title-container">
+                            <h2 class="kanban-column-title">Completed (<span class="completed-count">0</span>)</h2>
+                        </div>
+                        <div class="task-cards" id="completed-tasks"></div>
                     </div>
-                    <div class="task-cards" id="completed-tasks"></div>
-                </div>
-                <div class="kanban-column overdue" data-status="overdue">
-                    <div class="kanban-column-title-container">
-                        <h2 class="kanban-column-title">Overdue (0)</h2>
+                    <div class="kanban-column overdue" data-status="overdue">
+                        <div class="kanban-column-title-container">
+                             <h2 class="kanban-column-title">Overdue (<span class="overdue-count">0</span>)</h2>
+                        </div>
+                        <div class="task-cards" id="overdue-tasks"></div>
                     </div>
-                    <div class="task-cards" id="overdue-tasks"></div>
                 </div>
             </section>
+
+            <section id="calendar-section" class="calendar-view hidden-section">
+                <h1 class="section-title">Calendar View</h1>
+                <div class="calendar-container" id="calendar-container-content">
+                    <!-- <div class="ui container">
+                        <div class="ui action left icon input">
+                            <i class="search icon"></i>
+                            <input type="text" placeholder="Search">
+                            <button class="ui button">Submit</button>
+                        </div>
+                    </div> -->
+
+                    <br/>
+                    <div class="ui container">
+                        <div class="ui grid">
+                            <div class="ui sixteen column">
+                                <div id="calendar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="add-task-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button" id="close-add-task-modal">&times;</span>
+                    <h2>Add New Task</h2>
+                    <form id="add-task-form">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required><br><br>
+
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" required></textarea><br><br>
+
+                        <label for="category">Category:</label>
+                        <input type="text" id="category" name="category"><br><br>
+
+                        <label for="priority">Priority:</label>
+                        <select id="priority" name="priority">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select><br><br>
+
+                        <label for="dueDate">Due Date:</label>
+                        <input type="date" id="dueDate" name="dueDate"><br><br>
+
+                        <button type="submit" class="button primary-button">Add Task</button>
+                    </form>
+                </div>
+            </div>
+            <div id="error-popup" class="modal">
+                <div class="modal-content">
+                    <span class="close-button" id="close-error-popup">&times;</span>
+                    <h2 id="error-title">Error</h2>
+                    <p id="error-message"></p>
+                </div>
+            </div>
+
         </main>
     </div>
     <script>
@@ -120,16 +188,25 @@
         const navLinks = document.querySelectorAll('.nav-link');
         const collapseIconLeft = document.getElementById('collapse-icon-left');
         const collapseIconRight = document.getElementById('collapse-icon-right');
-        const todoTasksCount = document.getElementById('todo-tasks').children.length;
-        const inprogressTasksCount = document.getElementById('inprogress-tasks').children.length;
-        const completedTasksCount = document.getElementById('completed-tasks').children.length;
-        const overdueTasksCount = document.getElementById('overdue-tasks').children.length;
 
-        document.querySelector('.kanban-column-title-container h2').textContent = `To Do (${todoTasksCount})`;
-        document.querySelector('.kanban-column-title-container h2').textContent = `In Progress (${inprogressTasksCount})`;
-        document.querySelector('.kanban-column-title-container h2').textContent = `Completed (${completedTasksCount})`;
-        document.querySelector('.kanban-column-title-container h2').textContent = `Overdue (${overdueTasksCount})`;
+        //modal elements
+        const addTaskModal = document.getElementById('add-task-modal');
+        const kanbanSection = document.getElementById('kanban-section');
+        const calendarSection = document.getElementById('calendar-section');
 
+        // buttons that open the modal
+        const newTaskLink = document.getElementById('new-task-link');
+        const kanbanLink = document.getElementById('kanban-link');
+        const calendarLink = document.getElementById('calendar-link');
+
+        // close button for add task
+        const closeAddTaskModalBtn = document.getElementById('close-add-task-modal');
+
+
+
+
+
+        //sidebar collapse
         collapseBtn.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
             if (sidebar.classList.contains('collapsed')) {
@@ -145,8 +222,55 @@
             link.addEventListener('click', () => {
                 navLinks.forEach(link => link.classList.remove('active'));
                 link.classList.add('active');
+                // Hide all sections
+                document.querySelectorAll('.hidden-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                if (link.id === 'kanban-link') {
+                    kanbanSection.style.display = 'block';
+                } else if (link.id === 'calendar-link') {
+                    calendarSection.style.display = 'block';
+                }
+                else if (link.id === 'new-task-link'){
+                    addTaskModal.style.display = 'flex';
+                }
             });
         });
+
+
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+        }
+
+
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+        }
+
+        newTaskLink.addEventListener('click', () => showModal('add-task-modal'));
+
+
+        closeAddTaskModalBtn.addEventListener('click', () => hideModal('add-task-modal'));
+
+
+        addTaskModal.querySelector('.modal-content').addEventListener('click', (event) => {
+          event.stopPropagation(); 
+        });
+
+
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+
+
+        document.getElementById('kanban-section').style.display = 'block';
+        document.getElementById('calendar-section').style.display = 'none';
+
     </script>
 </body>
 </html>
