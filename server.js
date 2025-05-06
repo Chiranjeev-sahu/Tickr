@@ -6,7 +6,12 @@ const todoRoutes = require('./src/routes/todos');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:3000", "http://127.0.0.1:5500","http://127.0.0.1:3001"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"]
+  }));
 const port = process.env.PORT || 3000; 
 
 app.use(express.json()); 
