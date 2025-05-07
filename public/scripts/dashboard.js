@@ -21,10 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    let allTodos = [];//will be used later maybe
+    let allTodos = [];//will be used later 
     let calendarInitialized = false;
 
-    function fetchAndDisplayTodos() {
+    function setLoadingState(isLoading) {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.style.display = isLoading ? 'flex' : 'none';
+        }
+    }
+    async function fetchAndDisplayTodos() {
+        setLoadingState(true);
         return fetch('http://localhost:3000/api/todos', {
             method: 'GET',
             headers: {
@@ -132,10 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
         dueDateContainer.appendChild(calendarIcon);
         dueDateContainer.appendChild(dueDateSpan);
 
+        const deleteIcon = document.createElement('img');
+        deleteIcon.classList.add('delete-icon');
+        deleteIcon.src = './assets/icons/trash.png'; // Path to your trash icon
+        deleteIcon.alt = 'Delete Task';
+        deleteIcon.addEventListener('click', () => deleteTask(todo._id));
+
         card.appendChild(title);
         card.appendChild(description);
         card.appendChild(priorityContainer);
         card.appendChild(dueDateContainer);
+        card.appendChild(deleteIcon);
 
         return card;
     }
@@ -242,6 +256,33 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    async function deleteTask(todoId) { 
+        try {
+            const response = await fetch(`http://localhost:3000/api/todos/${todoId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!response.ok) {
+                let errorData;
+                try {
+                    errorData = await response.json();
+                } catch (jsonError) {
+                    throw new Error(`Failed to delete task. Status: ${response.status} ${response.statusText}`);
+                }
+                throw new Error(errorData.message || `Failed to delete task. Status: ${response.status}`);
+            }
+            await fetchAndDisplayTodos(); 
+    
+        } catch (error) {
+            console.error('Error in deleteTask:', error);
+            showError(error.message || 'An error occurred while deleting the task. Please try again.');
+        }
+    }
+    
     function showError(message) {
         errorMessageDisplay.textContent = message;
         errorPopup.style.display = "block";
@@ -278,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const title = document.getElementById('title').value.trim();
         const description = document.getElementById('description').value.trim();
-        const category = document.getElementById('category').value.trim();
+        // const category = document.getElementById('category').value.trim();
         const priority = document.getElementById('priority').value;
         const dueDate = document.getElementById('dueDate').value;
         const status = 'todo';
@@ -295,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newTodoData = {
             title,
             description,
-            category,
+            // category,
             priority,
             dueDate,
             status,
@@ -382,6 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: todo.title,
                 start: todo.dueDate,
                 end: todo.dueDate,
+                allDay: true,
                 description: todo.description,
                 color: getPriorityColor(todo.priority),
             }));
@@ -390,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function getPriorityColor(priority) {
         switch (priority) {
             case 'high':
-                return '#490000';
+                return '#B71C1C';
             case 'medium':
                 return '#F9A825';
             case 'low':
@@ -430,14 +472,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function updateCalendarEvents() {
-        $(document).ready(function () {
+        try {
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', formatEvents());
             $('#calendar').fullCalendar('rerenderEvents');
-        });
+        } catch (error) {
+            console.error('Calendar update error:', error);
+            showError('Failed to update calendar view');
+        }
     }
 
-    // Event listener for the calendar link
     calendarLink.addEventListener('click', () => {
         if (!calendarInitialized) {
             initializeCalendar();
