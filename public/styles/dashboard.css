@@ -351,6 +351,8 @@ header {
     right: 8px;
     /* width: 24px;
     height: 24px; */
+    margin-bottom: 20px;
+    margin-right: 15px;
     cursor: pointer;
 }
 
