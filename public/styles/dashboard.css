@@ -311,6 +311,7 @@ header {
 
 .task-card {
     padding: 15px;
+    position: relative;
     margin-bottom: 10px;
     background-color: #ffffff;
     border-radius: 8px;
@@ -345,8 +346,12 @@ header {
 }
 
 .delete-icon{
-    position:unset;
-    transform: translate(1000%,-100%);
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
 
 .logout {
