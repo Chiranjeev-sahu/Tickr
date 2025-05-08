@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors({
-    origin: ["http://localhost:3000", "http://127.0.0.1:5500","http://127.0.0.1:3001"],
+    origin: process.env.NODE_ENV === 'production'? process.env.FRONTEND_URL : ['http://localhost:3000', 'http://127.0.0.1:3000'],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"]
@@ -15,6 +15,7 @@ app.use(cors({
 const port = process.env.PORT || 3000; 
 
 app.use(express.json()); 
+express.urlencoded({ extended: true });
 
 connectDB();
 

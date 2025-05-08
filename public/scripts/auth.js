@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const signupData = { username, email, password };
 
-        fetch('http://localhost:3000/api/auth/signup', {
+        fetch(`${config.API_URL}/api/auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const loginData = { email, password };
 
-        fetch('http://localhost:3000/api/auth/login', {
+        fetch(`${config.API_URL}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
