@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     async function fetchAndDisplayTodos() {
         setLoadingState(true);
-        return fetch('http://localhost:3000/api/todos', {
+        return fetch(`${config.API_URL}/api/todos`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateTaskStatus(todoId, newStatus) {
-        fetch(`http://localhost:3000/api/todos/${todoId}`, {
+        fetch(`${config.API_URL}/api/todos/${todoId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ...currentTodoData,
                         status: newStatus
                     };
-                    fetch(`http://localhost:3000/api/todos/${todoId}`, {
+                    fetch(`${config.API_URL}/api/todos/${todoId}`, {
                         method: 'PUT',
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteTask(todoId) { 
         try {
-            const response = await fetch(`http://localhost:3000/api/todos/${todoId}`, {
+            const response = await fetch(`${config.API_URL}/api/todos/${todoId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
             status,
         };
 
-        fetch('http://localhost:3000/api/todos', {
+        fetch(`${config.API_URL}/api/todos`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
